@@ -1,0 +1,75 @@
+<div class="profile-page main-content">
+    <div class="card-container">
+        <div class="card-component">
+            <form class="k-form k-form-horizontal" style="max-width: 700px" [formGroup]="formGroup">
+                <fieldset class="k-form-fieldset">
+                    <kendo-formfield orientation="horizontal">
+                        <label class="k-label">
+                            <kendo-avatar imageSrc="assets/user.jpg" width="80px" height="80px" shape="circle"> </kendo-avatar>
+                        </label>
+                        <kendo-fileselect
+                            (select)="selectAvatar($event)"
+                            [showFileList]="false"
+                            formControlName="avatar"
+                            [multiple]="false"
+                            [restrictions]="fileRestrictions"
+                        >
+                            <kendo-fileselect-messages
+                                select="בחר תמונה"
+                                dropFilesHere="גרור תמונה לכאן"
+                            >
+                            </kendo-fileselect-messages>
+                        </kendo-fileselect>
+                        <kendo-formerror> שגיאה: תמונה אינה תקינה. </kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label class="k-label" [for]="firstName" [text]="customMsgService.translate('firstName')"> </kendo-label>
+                        <kendo-textbox formControlName="firstName" [clearButton]="true" #firstName required> </kendo-textbox>
+                        <kendo-formerror> שגיאה: שם פרטי הינו שדה חובה </kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label [for]="lastName" [text]="customMsgService.translate('lastName')"> </kendo-label>
+                        <kendo-textbox formControlName="lastName" [clearButton]="true" #lastName required> </kendo-textbox>
+                        <kendo-formerror> שגיאה: שם משפחה הינו שדה חובה </kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label [for]="email" [text]="customMsgService.translate('email')"> </kendo-label>
+                        <kendo-textbox formControlName="email" [clearButton]="true" #email required> </kendo-textbox>
+                        <kendo-formerror *ngIf="formGroup.controls.email.errors?.required"> שגיאה: כתובת אימייל הינו שדה חובה </kendo-formerror>
+                        <kendo-formerror *ngIf="formGroup.controls.email.errors?.email"> שגיאה: כתובת אימייל אינה תקינה </kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label [for]="phoneNumber" [text]="customMsgService.translate('phone')"> </kendo-label>
+                        <kendo-maskedtextbox #phoneNumber formControlName="phoneNumber" [mask]="phoneNumberMask"> </kendo-maskedtextbox>
+                        <kendo-formerror>
+                            <div *ngIf="formGroup.controls.phoneNumber.errors">שגיאה: מספר פלאפון אינו תקין</div>
+                            <div *ngIf="formGroup.controls.phoneNumber.errors?.required">שגיאה: מספר פלאפון הינו שדה חובה</div>
+                        </kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label [for]="birthDate" [text]="customMsgService.translate('birthDate')"> </kendo-label>
+                        <kendo-maskedtextbox #birthDate formControlName="birthDate"> </kendo-maskedtextbox>
+                        <kendo-formerror>
+                            <div *ngIf="formGroup.controls.birthDate.errors?.required">שגיאה: תאריך לידה הינו שדה חובה</div>
+                        </kendo-formerror>
+                    </kendo-formfield>
+
+                    <hr />
+                    <div class="k-form-buttons">
+                        <button kendoButton (click)="cancelChanges()">
+                            {{ customMsgService.translate('cancel') }}
+                        </button>
+                        <button kendoButton [primary]="true" [disabled]="formGroup.invalid || formGroup.pristine" (click)="saveChanges()">
+                            {{ customMsgService.translate('saveChanges') }}
+                        </button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
