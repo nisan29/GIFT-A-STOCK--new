@@ -1,6 +1,6 @@
 <div class="card-container">
     <div class="card-header-wrapper">
-        <h3 class="card-title"> {{ customMsgService.translate('teamEfficiency') }} </h3>
+        <h3 class="card-title"> {{ customMsgService.translate('mySecuritiesStatus') }} </h3>
         <div class="card-buttons">
             <kendo-buttongroup selection="single">
                 <button
@@ -9,14 +9,14 @@
                     [selected]="true"
                     (click)="selectedChart = 'Trend'"
                 >
-                    {{ customMsgService.translate('trend') }}
+                    {{ customMsgService.translate('adultDisplay') }}
                 </button>
                 <button
                     kendoButton
                     [toggleable]="true"
                     (click)="selectedChart = 'Volume'"
                 >
-                    {{ customMsgService.translate('volume') }}
+                    {{ customMsgService.translate('childDisplay') }}
                 </button>
             </kendo-buttongroup>
         </div>
@@ -69,7 +69,7 @@
                 </ng-template>
             </kendo-chart-tooltip>
             <kendo-chart-series>
-                <kendo-chart-series-item *ngFor="let item of series" type="line" [data]="item.data" [name]="item.name">
+                <kendo-chart-series-item *ngFor="let item of series" type="line" [data]="item.data" [name]="customMsgService.translate(item.name)">
                 </kendo-chart-series-item>
             </kendo-chart-series>
         </kendo-chart>
@@ -104,7 +104,7 @@
                     *ngFor="let item of series"
                     type="column"
                     [data]="item.data"
-                    [name]="item.name"
+                    [name]="customMsgService.translate(item.name)"
                     [color]="item.color"
                 >
                 </kendo-chart-series-item>

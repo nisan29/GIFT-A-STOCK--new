@@ -201,6 +201,12 @@ a {
         text-align: center;
     }
 
+    .send-button {
+        color: $white;
+        margin-inline-start: auto;
+        background-color: $primary;
+    }
+
     .hamburger-icon {
         background-image: url('./../assets/hamburger-icon.svg');
         background-repeat: no-repeat;

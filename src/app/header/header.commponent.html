@@ -8,17 +8,13 @@
             <h1>Gift A Stock</h1>
             <span class="vl"></span>
             <h2> {{ selectedPage.toLowerCase() }} </h2>
+                <button kendoButton class="send-button" iconClass="fas fa-gift" 
+                    >{{this.customMsgService.translate('sendGift')}}</button>
         </div>
         <div class="settings">
             <span> {{ this.customMsgService.translate('language') }} </span>
-            <kendo-dropdownlist
-                [data]="locales"
-                textField="locale"
-                valueField="localeId"
-                [value]="selectedLanguage"
-                (valueChange)="changeLanguage($event)"
-                class="ddl-locale"
-            >
+            <kendo-dropdownlist [data]="locales" textField="locale" valueField="localeId" [value]="selectedLanguage"
+                (valueChange)="changeLanguage($event)" class="ddl-locale">
             </kendo-dropdownlist>
         </div>
         <kendo-avatar imageSrc="assets/user.jpg" shape="circle">

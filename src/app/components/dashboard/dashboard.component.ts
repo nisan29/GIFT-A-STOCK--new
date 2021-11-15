@@ -24,22 +24,22 @@ export class DashboardComponent {
 
     public series: any[] = [
         {
-            name: 'Tiger Team',
+            name: 'stock1',
             data: this.fetchData(1),
             color: '#FF6358'
         },
         {
-            name: 'Lemon Team',
+            name: 'stock2',
             data: this.fetchData(2),
             color: '#F7C62F'
         },
         {
-            name: 'Organic Team',
+            name: 'stock3',
             data: this.fetchData(3),
             color: '#55AB1D'
         },
         {
-            name: 'Ocean Team',
+            name: 'stock4',
             data: this.fetchData(4),
             color: '#28B4C8'
         }

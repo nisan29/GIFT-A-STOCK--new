@@ -21,20 +21,19 @@ export class TeamComponent implements OnInit {
     public mySelection: string[] = [];
 
     public customMsgService: CustomMessagesService;
+    observer: 'adult' | 'child' = 'adult';
 
     constructor(public msgService: MessageService) {
         this.customMsgService = this.msgService as CustomMessagesService;
     }
 
     public ngOnInit(): void {
-        this.gridView = this.gridData.slice(25, 50);
+        this.gridView = this.gridData;
     }
 
-    // Update Grid collection during changing My Team/All Team
-    public onTeamChange(pageSize: number): void {
-        pageSize === 25
-            ? (this.gridView = this.gridData.slice(pageSize, pageSize * 2))
-            : (this.gridView = this.gridData.slice(0, pageSize));
+    public onTeamChange(observer: 'adult' | 'child'): void {
+        this.observer = observer;
+        // this.gridView = this.gridData.slice(20, 20 * 2);
     }
 
     public onFilter(inputValue: string): void {

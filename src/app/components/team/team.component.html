@@ -7,16 +7,16 @@
                     kendoButton
                     [toggleable]="true"
                     [selected]="true"
-                    (click)="onTeamChange(25)"
+                    (click)="onTeamChange('adult')"
                 >
-                    {{ customMsgService.translate('mySecurities') }}
+                    {{ customMsgService.translate('adultDisplay') }}
                 </button>
                 <button
                     kendoButton
                     [toggleable]="true"
-                    (click)="onTeamChange(100)"
+                    (click)="onTeamChange('child')"
                 >
-                    {{ customMsgService.translate('allTeams') }}
+                    {{ customMsgService.translate('childDisplay') }}
                 </button>
             </kendo-buttongroup>
         </div>
@@ -49,7 +49,7 @@
                 </button>
                 <button kendoGridPDFCommand icon="file-pdf"> {{ customMsgService.translate('exportPdf') }} </button>
             </ng-template>
-            <kendo-grid-checkbox-column
+            <!-- <kendo-grid-checkbox-column
                 [width]="45"
                 [headerClass]="{ 'text-center': true }"
                 [class]="{ 'text-center': true }"
@@ -57,7 +57,7 @@
                 [columnMenu]="false"
                 showSelectAll="true"
             >
-            </kendo-grid-checkbox-column>
+            </kendo-grid-checkbox-column> -->
             <!-- <kendo-grid-column-group [title]="customMsgService.translate('employee')" [columnMenu]="false"> -->
                 <kendo-grid-column
                     field="SecurityId"
@@ -95,7 +95,7 @@
                     </ng-template> -->
                 </kendo-grid-column>
             <!-- </kendo-grid-column-group> -->
-            <kendo-grid-column-group [title]="customMsgService.translate('performance')" [columnMenu]="false">
+            <kendo-grid-column-group [hidden]="observer === 'adult'" [title]="customMsgService.translate('performance')" [columnMenu]="false">
                 <kendo-grid-column
                     field="rating"
                     [title]="customMsgService.translate('rating')"
@@ -135,7 +135,7 @@
                         </kendo-sparkline>
                     </ng-templat> -->
                 </kendo-grid-column>
-                <kendo-grid-column
+                <kendo-grid-column [hidden]="observer === 'child'"
                     field="PercentageChange"
                     [title]="customMsgService.translate('PercentageChange')"
                     [width]="100"
