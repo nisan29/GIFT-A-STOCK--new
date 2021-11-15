@@ -1,65 +1,55 @@
 <div class="planning-page main-content">
     <div class="card-container grid">
         <h3 style="font-weight: bolder;" class="card-title">{{ customMsgService.translate('chooseAStock') }}</h3>
-        <app-card-component
-            class="card-component personal-card"
-            (toggleEvents)="toggleEvents($event)"
-        >
+        <app-card-component class="card-component personal-card" (toggleEvents)="toggleEvents($event)">
         </app-card-component>
 
         <div class="card-component">
             <h3 style="font-weight: bolder;" class="card-title">{{ customMsgService.translate('provideDetails') }}</h3>
 
-                    <form class="k-form k-form-vertical" [formGroup]="formGroup">
-                        <fieldset class="k-form-fieldset">
-                            <kendo-formfield orientation="vertical">
-                                <kendo-label class="k-label" [text]="{{ customMsgService.translate('amount')}}"></kendo-label>
-                                <kendo-datetimepicker
-                                    [popupSettings]="{ appendTo: 'root' }"
-                                    formControlName="start"
-                                >
-                                </kendo-datetimepicker>
-                            </kendo-formfield>
+            <form class="k-form k-form-vertical" [formGroup]="formGroup">
+                <fieldset class="k-form-fieldset">
+                    <kendo-formfield orientation="vertical">
+                        <kendo-label class="k-label" [text]=""></kendo-label>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); margin-left: 215px;">
+                            <kendo-chip-list (selectedChange)="selected($event)" selection="single">
+                                <div>{{customMsgService.translate('amount')}}:</div>
+                                <kendo-chip style="direction: ltr;" *ngFor="let amount of amounts"
+                                    [label]="amount.label" iconClass="fas fa-shekel-sign">
+                                </kendo-chip>
+                            </kendo-chip-list>
+                            <kendo-numerictextbox format="c0" formControlName="amount" [min]="0" [max]="1000"
+                                [autoCorrect]="true">
+                            </kendo-numerictextbox>
+                        </div>
+                    </kendo-formfield>
 
-                            <kendo-formfield orientation="vertical">
-                                <span> End </span>
-                                <kendo-datetimepicker
-                                    [popupSettings]="{ appendTo: 'root' }"
-                                    formControlName="end"
-                                >
-                                </kendo-datetimepicker>
-                            </kendo-formfield>
+                    <kendo-formfield orientation="vertical">
+                        <span> End </span>
+                        <kendo-datetimepicker [popupSettings]="{ appendTo: 'root' }" formControlName="end">
+                        </kendo-datetimepicker>
+                    </kendo-formfield>
 
-                            <kendo-formfield orientation="vertical">
-                                <span> Title </span>
-                                <kendo-textbox
-                                    placeholder="Title"
-                                    formControlName="title"
-                                >
-                            </kendo-textbox>
-                            </kendo-formfield>
+                    <kendo-formfield orientation="vertical">
+                        <span> Title </span>
+                        <kendo-textbox placeholder="Title" formControlName="title">
+                        </kendo-textbox>
+                    </kendo-formfield>
 
-                            <kendo-formfield>
-                                <span> Description </span>
-                                <kendo-textarea
-                                    [rows]="2"
-                                    placeholder="Add description to the event"
-                                    formControlName="description"
-                                >
-                                </kendo-textarea>
-                            </kendo-formfield>
+                    <kendo-formfield>
+                        <span> Description </span>
+                        <kendo-textarea [rows]="2" placeholder="Add description to the event"
+                            formControlName="description">
+                        </kendo-textarea>
+                    </kendo-formfield>
 
-                            <kendo-formfield>
-                                <kendo-label class="k-checkbox-label" text="All Day Event">
-                                    <input
-                                        type="checkbox"
-                                        kendoCheckBox
-                                        formControlName="isAllDay"
-                                    />
-                                </kendo-label>
-                            </kendo-formfield>
+                    <kendo-formfield>
+                        <kendo-label class="k-checkbox-label" text="All Day Event">
+                            <input type="checkbox" kendoCheckBox formControlName="isAllDay" />
+                        </kendo-label>
+                    </kendo-formfield>
 
-                            <!-- <kendo-formfield>
+                    <!-- <kendo-formfield>
                                 <span> Team </span>
                                 <kendo-dropdownlist
                                     [data]="teams"
@@ -79,8 +69,8 @@
                                     </ng-template>
                                 </kendo-dropdownlist>
                             </kendo-formfield> -->
-                        </fieldset>
-                    </form>
+                </fieldset>
+            </form>
         </div>
     </div>
 </div>

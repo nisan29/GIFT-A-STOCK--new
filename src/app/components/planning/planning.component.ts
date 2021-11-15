@@ -21,7 +21,7 @@ export class PlanningComponent {
     public selectedDate: Date = new Date('2013-06-27T00:00:00Z');
     public formGroup: FormGroup = this.formBuilder.group({
         id: null,
-        start: null,
+        amount: 50,
         end: null,
         startTimezone: null,
         endTimezone: null,
@@ -34,8 +34,12 @@ export class PlanningComponent {
         teamID: null
     });
     public customMsgService: CustomMessagesService;
-    public teams = teams;
-
+    // public teams = teams;
+    public amounts: Array<{ label: string }> = [
+        { label: "25" },
+        { label: "50" },
+        { label: "100" },
+    ];
     public events: Event[] = sampleData;
 
     constructor(public msgService: MessageService, private formBuilder: FormBuilder) {
@@ -47,21 +51,24 @@ export class PlanningComponent {
     public toggleEvents(stock: Stock): void {
         // this.data = [...this.filterEvents(stock.stockId, stock.selected)];
     }
-
-    public filterEvents(id, selected): Event[] {
-        const cloneData = this.data.slice();
-
-        if (selected) {
-            return cloneData.filter((event: Event) => event.teamID !== id);
-        } else {
-            return [...cloneData, ...this.events.filter((event: Event) => event.teamID === id)];
-        }
+    public selected(event) {
+        const selectedAmount = this.amounts[event].label;
+        this.formGroup.controls.amount.setValue(+selectedAmount);
     }
+    // public filterEvents(id, selected): Event[] {
+    // const cloneData = this.data.slice();
 
-    public setEventStyles(args: EventStyleArgs): object {
-        const currentTeam = teams.find((team: Team) => team.teamID === args.event.dataItem.teamID);
-        return { backgroundColor: currentTeam.teamColor };
-    }
+    // if (selected) {
+    //     return cloneData.filter((event: Event) => event.teamID !== id);
+    // } else {
+    //     return [...cloneData, ...this.events.filter((event: Event) => event.teamID === id)];
+    // }
+    // }
+
+    // public setEventStyles(args: EventStyleArgs): object {
+    // const currentTeam = teams.find((team: Team) => team.teamID === args.event.dataItem.teamID);
+    // return { backgroundColor: currentTeam.teamColor };
+    // }
 
     public createFormGroup(args: CreateFormGroupArgs): FormGroup {
         const dataItem = args.dataItem;
@@ -70,7 +77,7 @@ export class PlanningComponent {
 
         this.formGroup = this.formBuilder.group({
             id: args.isNew ? this.getNextId() : dataItem.id,
-            start: [dataItem.start],
+            amount: [dataItem.start],
             end: [dataItem.end],
             startTimezone: [dataItem.startTimezone],
             endTimezone: [dataItem.endTimezone],

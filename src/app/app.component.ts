@@ -65,7 +65,6 @@ export class AppComponent implements OnInit, OnDestroy {
         return [
             { text: 'התיק שלי', icon: 'k-i-grid', path: '/', selected: true },
             { text: 'מצב הנכסים שלי', icon: 'k-i-chart-line-markers', path: '/dashboard', selected: false },
-            { text: 'planning', icon: 'k-i-calendar', path: '/planning', selected: false },
             { text: 'מידע אישי', icon: 'k-i-user', path: '/profile', selected: false },
             { separator: true },
             { text: 'מידע', icon: 'k-i-information', path: '/info', selected: false }
