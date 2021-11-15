@@ -10,6 +10,7 @@ import { teams } from 'src/app/resources/teams';
 import { Team } from 'src/app/models/team.model';
 import { Security } from 'src/app/models/security.model';
 import { Event } from 'src/app/models/event.model';
+import { Stock } from 'src/app/models/stock.model';
 
 @Component({
     selector: 'app-planning-component',
@@ -18,7 +19,20 @@ import { Event } from 'src/app/models/event.model';
 export class PlanningComponent {
     public data: Event[];
     public selectedDate: Date = new Date('2013-06-27T00:00:00Z');
-    public formGroup: FormGroup;
+    public formGroup: FormGroup = this.formBuilder.group({
+        id: null,
+        start: null,
+        end: null,
+        startTimezone: null,
+        endTimezone: null,
+        isAllDay: null,
+        title: null,
+        description: null,
+        recurrenceRule: null,
+        recurrenceId: null,
+        recurrenceExceptions: null,
+        teamID: null
+    });
     public customMsgService: CustomMessagesService;
     public teams = teams;
 
@@ -30,8 +44,8 @@ export class PlanningComponent {
         this.data = this.events.slice();
     }
 
-    public toggleEvents(security: Security): void {
-        this.data = [...this.filterEvents(security.SecurityId, security.selected)];
+    public toggleEvents(stock: Stock): void {
+        // this.data = [...this.filterEvents(stock.stockId, stock.selected)];
     }
 
     public filterEvents(id, selected): Event[] {
@@ -66,7 +80,7 @@ export class PlanningComponent {
             recurrenceRule: dataItem.recurrenceRule,
             recurrenceId: dataItem.recurrenceId,
             recurrenceExceptions: [exceptions],
-            teamID: dataItem.teamID
+            teamID: null
         });
 
         return this.formGroup;

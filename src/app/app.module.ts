@@ -44,6 +44,7 @@ import 'hammerjs';
 import '@progress/kendo-angular-intl/locales/en/all';
 import '@progress/kendo-angular-intl/locales/he/all';
 import { RTL } from "@progress/kendo-angular-l10n";
+import { DialogsModule } from '@progress/kendo-angular-dialog';
 
 
 @NgModule({
@@ -56,7 +57,7 @@ import { RTL } from "@progress/kendo-angular-l10n";
         ProfileComponent,
         HeaderComponent,
         InfoComponent,
-        TeamComponent
+        TeamComponent,
     ],
     imports: [
         BrowserModule,
@@ -75,6 +76,7 @@ import { RTL } from "@progress/kendo-angular-l10n";
         HttpClientModule,
         ChartsModule,
         IntlModule,
+        DialogsModule,
         DateInputsModule,
         InputsModule,
         DropDownsModule,
