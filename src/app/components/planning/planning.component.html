@@ -7,27 +7,106 @@
         <div class="card-component">
             <h3 style="font-weight: bolder;" class="card-title">{{ customMsgService.translate('provideDetails') }}</h3>
 
-            <form class="k-form k-form-vertical" [formGroup]="formGroup">
+            <form class="k-form k-form-horizontal" style="max-width: 700px" [formGroup]="formGroup">
                 <fieldset class="k-form-fieldset">
-                    <kendo-formfield orientation="vertical">
-                        <kendo-label class="k-label" [text]=""></kendo-label>
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); margin-left: 215px;">
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label class="k-label" text="{{customMsgService.translate('amount')}}:"></kendo-label>
+                        <kendo-chip-list (selectedChange)="selected($event)" selection="single">
+                            <kendo-chip style="direction: ltr;" *ngFor="let amount of amounts" [label]="amount.label"
+                                iconClass="fas fa-shekel-sign">
+                            </kendo-chip>
+                        </kendo-chip-list>
+                        <kendo-numerictextbox class="col-6" format="c0" formControlName="amount" #amount required
+                            [min]="1" [max]="5000" [autoCorrect]="true">
+                        </kendo-numerictextbox>
+                        <kendo-formerror>יש להזין סכום בשקלים בין 1 ל 5000</kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label class="k-label" text="{{customMsgService.translate('quentity')}}:">
+                        </kendo-label>
+                        <kendo-numerictextbox class="col-6" format="c0" formControlName="quentity" #quentity required
+                            [min]="1" [max]="100" [autoCorrect]="true">
+                        </kendo-numerictextbox>
+                        <kendo-formerror>יש להזין כמות בין 1 ל 100</kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label [for]="lastName" [text]="customMsgService.translate('lastName')"> </kendo-label>
+                        <kendo-textbox formControlName="lastName" [clearButton]="true" #lastName required>
+                        </kendo-textbox>
+                        <kendo-formerror> שגיאה: שם משפחה הינו שדה חובה </kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label [for]="email" [text]="customMsgService.translate('email')"> </kendo-label>
+                        <kendo-textbox formControlName="email" [clearButton]="true" #email required> </kendo-textbox>
+                        <kendo-formerror *ngIf="formGroup.controls.email.errors?.required"> שגיאה: כתובת אימייל הינו שדה
+                            חובה </kendo-formerror>
+                        <kendo-formerror *ngIf="formGroup.controls.email.errors?.email"> שגיאה: כתובת אימייל אינה תקינה
+                        </kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label [for]="phoneNumber" [text]="customMsgService.translate('phone')"> </kendo-label>
+                        <kendo-maskedtextbox #phoneNumber formControlName="phoneNumber">
+                        </kendo-maskedtextbox>
+                        <kendo-formerror>
+                            <div *ngIf="formGroup.controls.phoneNumber.errors">שגיאה: מספר פלאפון אינו תקין</div>
+                            <div *ngIf="formGroup.controls.phoneNumber.errors?.required">שגיאה: מספר פלאפון הינו שדה
+                                חובה</div>
+                        </kendo-formerror>
+                    </kendo-formfield>
+
+                    <hr />
+                    <div class="k-form-buttons">
+                        <button kendoButton>
+                            {{ customMsgService.translate('cancel') }}
+                        </button>
+                        <!-- [disabled]="formGroup.invalid || formGroup.pristine" -->
+                        <button kendoButton [primary]="true" (click)="open()">
+                            {{ customMsgService.translate('saveChanges') }}
+                        </button>
+                    </div>
+
+                    <div class="container" style="position: relative; width: 60%;">
+                        <kendo-dialog title="Please confirm" *ngIf="opened" (close)="close('cancel')" [minWidth]="250"
+                        [width]="380">
+                        
+                        <ng-lottie class="svg" [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+
+                            <p style="margin: 30px; text-align: center;">
+                                Are you sure you want to continue?
+                            </p>
+                            <kendo-dialog-actions>
+                                <button kendoButton (click)="close('no')">No</button>
+                                <button kendoButton (click)="close('yes')" primary="true">Yes</button>
+                            </kendo-dialog-actions>
+                        </kendo-dialog>
+                    </div>
+                </fieldset>
+            </form>
+            <!-- <form class="k-form k-form-horizontal" [formGroup]="formGroup">
+                <fieldset class="k-form-fieldset">
+                    <kendo-formfield orientation="horizontal">
+                        <div class="row">
+                        <kendo-label class="k-label" text="{{customMsgService.translate('amount')}}:"></kendo-label>
                             <kendo-chip-list (selectedChange)="selected($event)" selection="single">
-                                <div>{{customMsgService.translate('amount')}}:</div>
                                 <kendo-chip style="direction: ltr;" *ngFor="let amount of amounts"
                                     [label]="amount.label" iconClass="fas fa-shekel-sign">
                                 </kendo-chip>
                             </kendo-chip-list>
-                            <kendo-numerictextbox format="c0" formControlName="amount" [min]="0" [max]="1000"
+                            <kendo-numerictextbox class="col-6" format="c0" formControlName="amount" [min]="0" [max]="5000"
                                 [autoCorrect]="true">
                             </kendo-numerictextbox>
                         </div>
                     </kendo-formfield>
 
-                    <kendo-formfield orientation="vertical">
-                        <span> End </span>
-                        <kendo-datetimepicker [popupSettings]="{ appendTo: 'root' }" formControlName="end">
-                        </kendo-datetimepicker>
+                    <kendo-formfield class="col-6" orientation="horizontal">
+                        <kendo-label class="k-label" text="{{customMsgService.translate('quentity')}}:"></kendo-label>
+                            <kendo-numerictextbox format="'n0'" formControlName="quentity" [min]="0" [max]="100"
+                                [autoCorrect]="true">
+                            </kendo-numerictextbox>
                     </kendo-formfield>
 
                     <kendo-formfield orientation="vertical">
@@ -49,7 +128,7 @@
                         </kendo-label>
                     </kendo-formfield>
 
-                    <!-- <kendo-formfield>
+                    <!-<kendo-formfield>
                                 <span> Team </span>
                                 <kendo-dropdownlist
                                     [data]="teams"
@@ -68,9 +147,9 @@
                                         {{ dataItem.teamName }}
                                     </ng-template>
                                 </kendo-dropdownlist>
-                            </kendo-formfield> -->
+                            </kendo-formfield> 
                 </fieldset>
-            </form>
+            </form> -->
         </div>
     </div>
 </div>

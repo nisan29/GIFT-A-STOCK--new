@@ -1,8 +1,8 @@
 <kendo-card *ngFor="let card of cards" (click)="onCardClick(card)"
     style="border-width: 0px; cursor: pointer; display: table-cell" [ngClass]="{ 'card-opacity': card.selected }">
-    <kendo-card-header class="k-hbox">
-        <kendo-avatar [imageSrc]="card.imgId" 
-            width="155px" height="100px" [shape]="'square'" class="stock-card" style="border: gray 2px solid;">
+    <kendo-card-header *ngIf="card.imgId" class="k-hbox">
+        <kendo-avatar  [imageSrc]="card.imgId" 
+            width="155px" height="100px" [shape]="'square'" class="stock-card" style="border:0px">
         </kendo-avatar>
     </kendo-card-header>
 </kendo-card>

@@ -40,12 +40,5 @@ export class HeaderComponent {
         this.toggle.emit();
     }
 
-    public onClickDialog() {
-        this.dialogService.open({
-            title: 'שלח מתנה',
-            content: PlanningComponent,
-            width: 900,
-            height: 550
-        })
-    }
+
 }

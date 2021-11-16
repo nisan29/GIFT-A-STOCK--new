@@ -16,6 +16,7 @@ export const heCustomMessages = {
     chooseAStock: '1. בחר/י את המנייה',
     provideDetails: '2. ספק/י את הפרטים',
     amount: 'סכום העברה',
+    quentity: 'כמות להעברה',
     stock1: "מנייה 1",
     stock2: "מנייה 2",
     stock3: "מנייה 3",

@@ -6,26 +6,32 @@ import { CreateFormGroupArgs, EventStyleArgs, EditMode } from '@progress/kendo-a
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { sampleData } from 'src/app/resources/events';
-import { teams } from 'src/app/resources/teams';
-import { Team } from 'src/app/models/team.model';
-import { Security } from 'src/app/models/security.model';
 import { Event } from 'src/app/models/event.model';
 import { Stock } from 'src/app/models/stock.model';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
     selector: 'app-planning-component',
     templateUrl: './planning.component.html'
 })
 export class PlanningComponent {
+    options: AnimationOptions = {
+        path: 'https://assets5.lottiefiles.com/packages/lf20_30iie6.json'
+    };
+
+    animationCreated(animationItem: AnimationItem): void {
+        console.log(animationItem);
+    }
     public data: Event[];
     public selectedDate: Date = new Date('2013-06-27T00:00:00Z');
     public formGroup: FormGroup = this.formBuilder.group({
         id: null,
         amount: 50,
-        end: null,
-        startTimezone: null,
-        endTimezone: null,
-        isAllDay: null,
+        quentity: null,
+        email: null,
+        lastName: null,
+        phoneNumber: null,
         title: null,
         description: null,
         recurrenceRule: null,
@@ -36,11 +42,14 @@ export class PlanningComponent {
     public customMsgService: CustomMessagesService;
     // public teams = teams;
     public amounts: Array<{ label: string }> = [
-        { label: "25" },
         { label: "50" },
+        { label: "75" },
         { label: "100" },
+        { label: "200" },
+        { label: "500" },
     ];
     public events: Event[] = sampleData;
+    public opened = false;
 
     constructor(public msgService: MessageService, private formBuilder: FormBuilder) {
         this.customMsgService = this.msgService as CustomMessagesService;
@@ -78,10 +87,10 @@ export class PlanningComponent {
         this.formGroup = this.formBuilder.group({
             id: args.isNew ? this.getNextId() : dataItem.id,
             amount: [dataItem.start],
-            end: [dataItem.end],
-            startTimezone: [dataItem.startTimezone],
-            endTimezone: [dataItem.endTimezone],
-            isAllDay: dataItem.isAllDay,
+            quentity: [dataItem.end],
+            email: [dataItem.startTimezone],
+            lastName: [dataItem.endTimezone],
+            phoneNumber: dataItem.isAllDay,
             title: dataItem.title,
             description: dataItem.description,
             recurrenceRule: dataItem.recurrenceRule,
@@ -101,4 +110,23 @@ export class PlanningComponent {
     public isEditingSeries(editMode: EditMode): boolean {
         return editMode === EditMode.Series;
     }
+
+    public close(status) {
+        console.log(`Dialog result: ${status}`);
+        this.opened = false;
+    }
+
+    public open() {
+        console.log('in');
+        this.opened = true;
+    }
+
+    // public onClickDialog() {
+    //     this.dialogService.open({
+    //         title: 'שלח מתנה',
+    //         content: PlanningComponent,
+    //         width: 900,
+    //         height: 550
+    //     })
+    // }
 }

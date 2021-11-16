@@ -10,6 +10,13 @@ h3 {
 a {
     text-decoration: none;
 }
+.svg{
+width: 500px;
+position: absolute;
+top: -40px;
+left: -30px;
+pointer-events: none;
+}
 
 // App styles
 .k-drawer-container {
@@ -96,7 +103,7 @@ a {
 
     .card-component {
         grid-column: 1 / -1;
-        overflow: hidden;
+        overflow: auto;
     }
 }
 
@@ -177,11 +184,22 @@ a {
 }
 
 // Header
-.header-bg {
-    background-image: url('./../assets/header-bg.jpg');
-}
+// .icon {
+//     background-image: url('./../assets/icon.png');
+//     height: 300px; 
+//     background-size: cover;
+//     position: sticky;
+//     background-position: center; /* Center the image */
+//     background-repeat: no-repeat; /* Do not repeat the image */
+// }
 
 .header {
+    background-image: url('./../assets/header-bg.jpg');
+    height: 500px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+    // background-position: right;
     height: 80px;
     position: sticky;
     top: 0;
@@ -220,6 +238,14 @@ a {
         flex-direction: column;
         align-items: flex-start;
         margin-left: 25px;
+
+        .k-avatar {
+            display: block;
+            width: 40px;
+            height: 40px;
+            flex-basis: 40px;
+            box-shadow: 0 0 0px 1px $white;
+        }
     }
 
     .k-avatar {
@@ -301,21 +327,20 @@ a {
 
     .personal-card {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-row-gap: 1em;
-        row-gap: 1em;
+        grid-template-columns: repeat(1, 1fr);
+        grid-row-gap: 1pc;
+        row-gap: 1pc;
     }
 
     .k-card-header {
         padding-left: 10px;
-        padding-right: 10px;
+        padding-right: 103px;
     }
 
     .card-title {
         grid-column: 1 / -1;
     }
     .k-hbox {
-        padding: 0 20px;
         background: transparent;
         align-items: center;
     }
@@ -334,11 +359,11 @@ a {
     }
 }
 
-@media (min-width: 480px) {
+@media (min-width: 580px) {
     .planning-page {
         .card-container,
         .personal-card {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
         }
 
         .k-hbox {
@@ -347,7 +372,7 @@ a {
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 868px) {
     .planning-page {
         .k-hbox {
             border-width: 0;
@@ -367,10 +392,10 @@ a {
     }
 }
 
-@media (min-width: 1130px) {
+@media (min-width: 1140px) {
     .planning-page {
         .personal-card {
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 0fr);
         }
     }
 }

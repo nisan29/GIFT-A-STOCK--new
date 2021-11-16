@@ -1,15 +1,18 @@
-<div class="header header-bg">
+<div class="header">
     <div style="direction: rtl;" class="nav-container">
         <div class="menu-button">
             <span class="k-icon hamburger-icon" (click)="onButtonClick()"></span>
         </div>
-
+        <div class="icon">
+            <kendo-avatar [imageSrc]="'assets/logo/icon2.png'" border="0px" height="80px" width="85px" size="large"
+                shape="circle">
+            </kendo-avatar>
+        </div>
         <div class="title">
-            <h1>Gift A Stock</h1>
             <span class="vl"></span>
             <h2> {{ selectedPage.toLowerCase() }} </h2>
-                <button kendoButton routerLink="planning" class="send-button" primary="true" iconClass="fas fa-gift">
-                    {{this.customMsgService.translate('sendGift')}}</button>
+            <button kendoButton routerLink="planning" class="send-button" primary="true" iconClass="fas fa-gift">
+                {{this.customMsgService.translate('sendGift')}}</button>
         </div>
         <div class="settings">
             <span> {{ this.customMsgService.translate('language') }} </span>
@@ -21,4 +24,4 @@
         </kendo-avatar>
     </div>
 </div>
-<div kendoDialogContainer ></div> 
+<div kendoDialogContainer></div>

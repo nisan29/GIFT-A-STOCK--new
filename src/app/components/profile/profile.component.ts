@@ -60,8 +60,10 @@ export class ProfileComponent implements AfterViewInit {
         this.avatars = document.querySelectorAll('.k-avatar .k-avatar-image');
         const avatarImg = localStorage.getItem('avatar');
         if (avatarImg) {
-            this.avatars.forEach((avatar: HTMLElement) => {
-                avatar.style['background-image'] = `url("${avatarImg}")`;
+            this.avatars.forEach((avatar: HTMLElement, index:number) => {
+                if(index > 0){
+                    avatar.style['background-image'] = `url("${avatarImg}")`;
+                }
             });
         }
     }

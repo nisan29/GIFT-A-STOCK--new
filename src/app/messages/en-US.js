@@ -16,6 +16,7 @@ export const enCustomMessages = {
     chooseAStock: '1. Choose the stock',
     provideDetails: '2. Provide the details',
     amount: 'Amount',
+    quentity: 'Quentity',
     stock1: "Stock 1",
     stock2: "Stock 2",
     stock3: "Stock 3",

@@ -39,13 +39,19 @@ const drawerRoutes = [
     { path: 'info', component: InfoComponent }
 ];
 
+
 import 'hammerjs';
 
 import '@progress/kendo-angular-intl/locales/en/all';
 import '@progress/kendo-angular-intl/locales/he/all';
 import { RTL } from "@progress/kendo-angular-l10n";
 import { DialogsModule } from '@progress/kendo-angular-dialog';
+import player from 'lottie-web';
+import { LottieModule } from 'ngx-lottie';
 
+export function playerFactory() {
+    return player;
+  }
 
 @NgModule({
     declarations: [
@@ -81,7 +87,8 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
         InputsModule,
         DropDownsModule,
         RouterModule.forRoot(drawerRoutes),
-        NotificationModule
+        NotificationModule,
+        LottieModule.forRoot({ player: playerFactory })
     ],
     providers: [
         [{ provide: RTL, useValue: true }],
