@@ -4,7 +4,6 @@ import { MessageService } from '@progress/kendo-angular-l10n';
 import { CustomMessagesService } from '../services/custom-messages.service';
 import { locales } from 'src/app/resources/locales';
 import { DialogService } from '@progress/kendo-angular-dialog';
-import { PlanningComponent } from '../components/planning/planning.component';
 
 @Component({
     selector: 'app-header-component',

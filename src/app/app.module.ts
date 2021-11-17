@@ -32,7 +32,7 @@ import { NotificationModule } from '@progress/kendo-angular-notification';
 import { MessageService } from '@progress/kendo-angular-l10n';
 
 const drawerRoutes = [
-    { path: '', component: TeamComponent },
+    { path: '', component: PlanningComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'planning', component: PlanningComponent },
     { path: 'profile', component: ProfileComponent },
@@ -48,6 +48,7 @@ import { RTL } from "@progress/kendo-angular-l10n";
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import player from 'lottie-web';
 import { LottieModule } from 'ngx-lottie';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 
 export function playerFactory() {
     return player;
@@ -64,6 +65,7 @@ export function playerFactory() {
         HeaderComponent,
         InfoComponent,
         TeamComponent,
+        SignInComponent,
     ],
     imports: [
         BrowserModule,

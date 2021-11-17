@@ -1,6 +1,6 @@
-@import './variables';
-@import './typography';
-@import './common';
+@import "./variables";
+@import "./typography";
+@import "./common";
 
 //Grid
 .customer-photo {
@@ -70,8 +70,32 @@
     line-height: 50px;
 }
 
+.d-flex {
+    position: fixed;
+    left: 0px;
+    top: 40%;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+}
+
+.form-on-loader {
+    opacity: 0.5;
+}
+
 .card-opacity {
     opacity: 0.5;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 420px;
+    padding: 15px;
+    margin: auto;
+    -webkit-text-size-adjust: 100%;
+    --input-padding-x: 0.75rem;
+    --input-padding-y: 0.75rem;
+    
 }
 
 // Scheduler

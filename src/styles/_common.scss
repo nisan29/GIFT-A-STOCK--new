@@ -10,12 +10,13 @@ h3 {
 a {
     text-decoration: none;
 }
-.svg{
-width: 500px;
-position: absolute;
-top: -40px;
-left: -30px;
-pointer-events: none;
+
+.svg {
+    width: 500px;
+    position: absolute;
+    top: -40px;
+    left: -30px;
+    pointer-events: none;
 }
 
 // App styles
@@ -183,18 +184,8 @@ pointer-events: none;
     }
 }
 
-// Header
-// .icon {
-//     background-image: url('./../assets/icon.png');
-//     height: 300px; 
-//     background-size: cover;
-//     position: sticky;
-//     background-position: center; /* Center the image */
-//     background-repeat: no-repeat; /* Do not repeat the image */
-// }
-
 .header {
-    background-image: url('./../assets/header-bg.jpg');
+    background-image: url("./../assets/header-bg.jpg");
     height: 500px; /* You must set a specified height */
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -226,7 +217,7 @@ pointer-events: none;
     }
 
     .hamburger-icon {
-        background-image: url('./../assets/hamburger-icon.svg');
+        background-image: url("./../assets/hamburger-icon.svg");
         background-repeat: no-repeat;
         width: 20px;
         cursor: pointer;
@@ -481,7 +472,7 @@ pointer-events: none;
 // Info page
 .info-page {
     background-color: #06163e;
-    background-image: url('../assets/info-bg.jpg');
+    background-image: url("../assets/info-bg.jpg");
     background-position: right 0px top 0px;
     color: $white;
     background-repeat: no-repeat;
@@ -578,7 +569,7 @@ pointer-events: none;
     }
 
     .footer {
-        background-image: url('../assets/info-waves.svg');
+        background-image: url("../assets/info-waves.svg");
         background-repeat: no-repeat;
         height: 320px;
         background-size: cover;
