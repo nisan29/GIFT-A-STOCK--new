@@ -4,16 +4,49 @@
         <app-card-component class="card-component personal-card" (toggleEvents)="toggleEvents($event)">
         </app-card-component>
 
-        <div class="card-component">
-            <h3 style="font-weight: bolder;" class="card-title">{{ customMsgService.translate('provideDetails') }}</h3>
+        <button [hidden]="disable" type="button" (click)="moreStocks()" class="btn btn-link">הצג עוד...</button>
+
+        <h3 style="font-weight: bolder;" class="card-title">{{ customMsgService.translate('provideDetails') }}</h3>
+
+        <div [hidden]="!disable" class="card-header-wrapper">
+            <div class="card-buttons">
+                <kendo-buttongroup style="margin-right: 45%;" selection="single">
+                    <button kendoButton [toggleable]="true" [selected]="true" (click)="onChange('etf')">
+                        מדדים
+                    </button>
+                    <button kendoButton [toggleable]="true" (click)="onChange('stocks')">
+                        מניות
+                    </button>
+                </kendo-buttongroup>
+            </div>
+            <span></span>
+        </div>
+
+        <div class="card-component mb-1">
+            <div [hidden]="!disable">
+                <kendo-combobox [kendoDropDownFilter]="filterSettings" [data]="generalData" textField="Madad"
+                    [valuePrimitive]="true" (valueChange)="selectedChanged($event)" valueField="Madad"
+                    [filterable]="true" placeholder="בחר/י נכסים">
+                </kendo-combobox>
+            </div>
+
+            <div [hidden]="!disable">
+                <kendo-combobox [kendoDropDownFilter]="filterSettings" [data]="generalPapers" textField="nameValue"
+                    [valuePrimitive]="true" (valueChange)="selectedChanged($event)" valueField="nameValue"
+                    [filterable]="true" placeholder="בחר/י נכסים">
+                </kendo-combobox>
+            </div>
+
+
 
             <form class="k-form k-form-horizontal" style="max-width: 700px" [formGroup]="formGroup">
                 <fieldset class="k-form-fieldset">
                     <kendo-formfield orientation="horizontal">
-                        <kendo-label style="margin-left: 0px;" class="k-label"
+                        <kendo-label style="margin-left: 0px;font-weight: bold;" class="k-label"
                             text="{{customMsgService.translate('amount')}}"></kendo-label>
-                        <button *ngFor="let amount of amounts" type="button" (click)="selected($event.target.innerHTML)"
-                            class="btn btn-light fas fa-shekel-sign"> {{ amount.label }}</button>
+                        <button style="padding:10px 0px 5px 10px;" *ngFor="let amount of amounts" type="button"
+                            (click)="selected($event.target.innerHTML)" class="btn btn-light fas fa-shekel-sign"> {{
+                            amount.label }}</button>
                         <div class="input-group mb-1">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i
@@ -26,24 +59,37 @@
                     </kendo-formfield>
 
                     <kendo-formfield orientation="horizontal">
-                        <kendo-label style="margin-left: 0px;" class="k-label"
+                        <kendo-label style="margin-left: 0px;font-weight: bold;" class="k-label"
                             text="{{customMsgService.translate('quentity')}}">
                         </kendo-label>
                         <!--  -->
                         <div class="input-group mb-2">
                             <input style="padding: 0px 2px;" type="number" required class="form-control"
                                 formControlName="quentity" #quentity>
-                            <kendo-label class="k-label" style="margin-left: 0px; margin-top: 4px;" [text]="customMsgService.translate('price')"></kendo-label>
+                            <kendo-label class="k-label" style="margin-left: 0px; margin-top: 4px; font-weight: bold;"
+                                [text]="customMsgService.translate('price')"></kendo-label>
                             <input style="padding: 0px 5px;" [value]="calculatedValue" disabled type="text"
                                 class="form-control">
                         </div>
                         <kendo-formerror>יש להזין כמות גדולה מ 1 </kendo-formerror>
                     </kendo-formfield>
 
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label style="margin-left: 0px;" class="k-label" >
+                        </kendo-label>
+                        <div class="checkbox mb-1">
+                            <label>
+                                <input style="margin-left: 5px;" #isFamily type="checkbox" formControlName="isFamily">העברה מתיק הנכסים שברשותי
+                            </label>
+                        </div>
+                        <kendo-formerror>זהו שדה חובה</kendo-formerror>
+                    </kendo-formfield>
+                    
+
                     <hr />
 
                     <kendo-formfield orientation="horizontal">
-                        <kendo-label style="margin-left: 0px;" class="k-label"
+                        <kendo-label style="margin-left: 0px; font-weight: bold" class="k-label"
                             text="{{customMsgService.translate('sentTo')}}">
                         </kendo-label>
                         <div class="mb-2 row">
@@ -52,17 +98,17 @@
                                     class="form-control" #sentToName required>
                             </div>
                         </div>
-                        <kendo-formerror> שגיאה: שם מלא הינו שדה חובה </kendo-formerror>
+                        <kendo-formerror>שם מלא הינו שדה חובה</kendo-formerror>
                     </kendo-formfield>
 
                     <kendo-formfield orientation="horizontal">
                         <kendo-label style="margin-left: 0px;" class="k-label"></kendo-label>
                         <div class="form-floating mb-1">
                             <input style="padding: 0px 5px;height: 50px;" formControlName="phoneNumber" type="number"
-                            class="form-control" id="floatingInput" #phoneNumber required>
+                                class="form-control" id="floatingInput" #phoneNumber required>
                             <label dir="rtl" for="floatingInput">{{customMsgService.translate('phoneNumber')}}</label>
                         </div>
-                        <kendo-formerror> שגיאה: מספר פלאפון הינו שדה חובה </kendo-formerror>
+                        <kendo-formerror>מספר סלולרי הינו שדה חובה ויש להזין ספרות בלבד</kendo-formerror>
                     </kendo-formfield>
 
                     <kendo-formfield orientation="horizontal">
@@ -75,40 +121,80 @@
                             <input type="email" #email class="form-control" style="padding: 0px 5px;"
                                 formControlName="email" required aria-describedby="basic-addon1">
                         </div>
-                        <kendo-formerror> שגיאה: כתובת אימייל הינה שדה חובה </kendo-formerror>
-                        <kendo-formerror *ngIf="formGroup.controls.email.errors?.email"> שגיאה: כתובת אימייל אינה תקינה
+                        <kendo-formerror>כתובת אימייל הינה שדה חובה</kendo-formerror>
+                        <kendo-formerror *ngIf="formGroup.controls.email.errors?.email">כתובת אימייל אינה תקינה
                         </kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label style="margin-left: 0px;" class="k-label"></kendo-label>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="far fa-envelope"></i></span>
+                            </div>
+                            <textarea style="padding: 0px 5px;" placeholder="כתוב/י ברכה" formControlName="message" class="form-control"
+                                aria-label="With textarea"></textarea>
+                        </div>
                     </kendo-formfield>
 
                     <hr />
 
                     <kendo-formfield orientation="horizontal">
-                        <kendo-label style="margin-left: 0px;" class="k-label"
+                        <kendo-label style="margin-left: 0px;font-weight: bold" class="k-label"
                             text="{{customMsgService.translate('from')}}">
                         </kendo-label>
                         <div class="mb-2 row">
                             <div class="col-sm-10">
-                                <input style="padding: 0px 5px;" formControlName="from" type="text"
-                                    class="form-control" #sentToName required>
+                                <input style="padding: 0px 5px;" formControlName="from" type="text" class="form-control"
+                                    #sentToName required>
                             </div>
                         </div>
-                        <kendo-formerror> שגיאה: שם מלא הינו שדה חובה </kendo-formerror>
+                        <kendo-formerror>שם מלא הינו שדה חובה</kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label style="margin-left: 0px;" class="k-label">
+                        </kendo-label>
+                        <kendo-combobox #bankAccount formControlName="bankAccount" [kendoDropDownFilter]="filterSettings" [data]="null" textField="name"
+                        [valuePrimitive]="true" (valueChange)="selectedChanged($event)" valueField="name"
+                        [filterable]="true" placeholder="בחר/י חשבון">
+                    </kendo-combobox>
+                        <kendo-formerror>זהו הינו שדה חובה</kendo-formerror>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label style="margin-left: 0px;" class="k-label">
+                        </kendo-label>
+                        <kendo-combobox #branch formControlName="branch" [kendoDropDownFilter]="filterSettings" [data]="null" textField="name"
+                        [valuePrimitive]="true" (valueChange)="selectedChanged($event)" valueField="name"
+                        [filterable]="true" placeholder="בחר/י סניף">
+                    </kendo-combobox>
+                        <kendo-formerror>זהו הינו שדה חובה</kendo-formerror>
+                    
+                    </kendo-formfield>
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label style="margin-left: 0px;" class="k-label"></kendo-label>
+                        <div class="form-floating mb-1">
+                            <input style="padding: 0px 5px;height: 50px;" formControlName="account" type="number"
+                                class="form-control" id="floatingInput" #account required>
+                            <label dir="rtl" for="floatingInput">מספר חשבון</label>
+                        </div>
+                        <kendo-formerror>מספר חשבון הינו שדה חובה ויש להזין ספרות בלבד</kendo-formerror>
                     </kendo-formfield>
 
 
-                    <div class="k-form-buttons">
+                    <div style="margin-bottom: 20px; display:grid;" class="k-form-buttons">
+                        <button [disabled]="formGroup.invalid || formGroup.pristine" kendoButton [primary]="true"
+                            (click)="open()">
+                            {{ customMsgService.translate('saveChanges') }}
+                        </button>
                         <button kendoButton>
                             {{ customMsgService.translate('cancel') }}
-                        </button>
-                        <!-- [disabled]="formGroup.invalid || formGroup.pristine" -->
-                        <button kendoButton [primary]="true" (click)="open()">
-                            {{ customMsgService.translate('saveChanges') }}
                         </button>
                     </div>
 
                     <div class="container" style="position: relative; width: 60%;">
-                        <kendo-dialog title="Please confirm" *ngIf="opened" (close)="close('cancel')" [minWidth]="250"
-                            [width]="380">
+                        <kendo-dialog *ngIf="opened" (close)="close('cancel')" [minWidth]="250" [width]="380">
 
                             <ng-lottie class="svg" [options]="options" (animationCreated)="animationCreated($event)">
                             </ng-lottie>
@@ -124,70 +210,6 @@
                     </div>
                 </fieldset>
             </form>
-            <!-- <form class="k-form k-form-horizontal" [formGroup]="formGroup">
-                <fieldset class="k-form-fieldset">
-                    <kendo-formfield orientation="horizontal">
-                        <div class="row">
-                        <kendo-label class="k-label" text="{{customMsgService.translate('amount')}}:"></kendo-label>
-                            <kendo-chip-list (selectedChange)="selected($event)" selection="single">
-                                <kendo-chip style="direction: ltr;" *ngFor="let amount of amounts"
-                                    [label]="amount.label" iconClass="fas fa-shekel-sign">
-                                </kendo-chip>
-                            </kendo-chip-list>
-                            <kendo-numerictextbox class="col-6" format="c0" formControlName="amount" [min]="0" [max]="5000"
-                                [autoCorrect]="true">
-                            </kendo-numerictextbox>
-                        </div>
-                    </kendo-formfield>
-
-                    <kendo-formfield class="col-6" orientation="horizontal">
-                        <kendo-label class="k-label" text="{{customMsgService.translate('quentity')}}:"></kendo-label>
-                            <kendo-numerictextbox format="'n0'" formControlName="quentity" [min]="0" [max]="100"
-                                [autoCorrect]="true">
-                            </kendo-numerictextbox>
-                    </kendo-formfield>
-
-                    <kendo-formfield orientation="vertical">
-                        <span> Title </span>
-                        <kendo-textbox placeholder="Title" formControlName="title">
-                        </kendo-textbox>
-                    </kendo-formfield>
-
-                    <kendo-formfield>
-                        <span> Description </span>
-                        <kendo-textarea [rows]="2" placeholder="Add description to the event"
-                            formControlName="description">
-                        </kendo-textarea>
-                    </kendo-formfield>
-
-                    <kendo-formfield>
-                        <kendo-label class="k-checkbox-label" text="All Day Event">
-                            <input type="checkbox" kendoCheckBox formControlName="isAllDay" />
-                        </kendo-label>
-                    </kendo-formfield>
-
-                    <!-<kendo-formfield>
-                                <span> Team </span>
-                                <kendo-dropdownlist
-                                    [data]="teams"
-                                    [valuePrimitive]="true"
-                                    valueField="teamID"
-                                    textField="teamName"
-                                    [formControl]="formGroup.get('teamID')"
-                                >
-                                    <ng-template kendoDropDownListValueTemplate let-dataItem>
-                                        <span class="k-team-mark" [ngStyle]="{ 'background-color': dataItem.teamColor }"></span>&nbsp;{{
-                                            dataItem?.teamName
-                                        }}
-                                    </ng-template>
-                                    <ng-template kendoDropDownListItemTemplate let-dataItem>
-                                        <span class="k-team-mark" [ngStyle]="{ 'background-color': dataItem.teamColor }"></span>
-                                        {{ dataItem.teamName }}
-                                    </ng-template>
-                                </kendo-dropdownlist>
-                            </kendo-formfield> 
-                </fieldset>
-            </form> -->
         </div>
     </div>
 </div>

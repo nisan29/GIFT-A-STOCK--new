@@ -3,19 +3,26 @@ import { MessageService } from '@progress/kendo-angular-l10n';
 import { CustomMessagesService } from 'src/app/services/custom-messages.service';
 
 import { CreateFormGroupArgs, EventStyleArgs, EditMode } from '@progress/kendo-angular-scheduler';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { sampleData } from 'src/app/resources/events';
+import { ETF } from 'src/app/resources/ETFData';
+import { ETFPapers } from 'src/app/resources/ETFPapers';
+import { STOCKSPapers } from 'src/app/resources/STOCKSPapers';
+import { STOCKS } from 'src/app/resources/STOCKSData';
 import { Event } from 'src/app/models/event.model';
 import { Stock } from 'src/app/models/stock.model';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
+import { DropDownFilterSettings } from '@progress/kendo-angular-dropdowns';
 
 @Component({
     selector: 'app-planning-component',
     templateUrl: './planning.component.html'
 })
 export class PlanningComponent implements OnInit {
+    disable = false;
+
     options: AnimationOptions = {
         path: 'https://assets5.lottiefiles.com/packages/lf20_30iie6.json'
     };
@@ -35,11 +42,11 @@ export class PlanningComponent implements OnInit {
         sentTo: null,
         phoneNumber: null,
         from: null,
-        description: null,
-        recurrenceRule: null,
-        recurrenceId: null,
-        recurrenceExceptions: null,
-        teamID: null
+        message: null,
+        isFamily: null,
+        account: null,
+        bankAccount: [null, Validators.required],
+        branch: [null, Validators.required]
     });
     public customMsgService: CustomMessagesService;
     // public teams = teams;
@@ -51,6 +58,13 @@ export class PlanningComponent implements OnInit {
     ];
     public events: Event[] = sampleData;
     public opened = false;
+    public generalData = ETF;
+    public generalPapers: Array<any> = [];
+    public etfData = ETF;
+    public etfPapers = ETFPapers;
+    public stocksData = STOCKS;
+    public stocksPapers = STOCKSPapers;
+    public selectedPaper = 'etf';
 
     constructor(public msgService: MessageService, private formBuilder: FormBuilder) {
         this.customMsgService = this.msgService as CustomMessagesService;
@@ -80,47 +94,9 @@ export class PlanningComponent implements OnInit {
         // this.data = [...this.filterEvents(stock.stockId, stock.selected)];
     }
     public selected(selectedAmount) {
-        // console.log(event);
-        // const selectedAmount = this.amounts[event].label;
         this.formGroup.controls.amount.setValue(+selectedAmount);
     }
-    // public filterEvents(id, selected): Event[] {
-    // const cloneData = this.data.slice();
 
-    // if (selected) {
-    //     return cloneData.filter((event: Event) => event.teamID !== id);
-    // } else {
-    //     return [...cloneData, ...this.events.filter((event: Event) => event.teamID === id)];
-    // }
-    // }
-
-    // public setEventStyles(args: EventStyleArgs): object {
-    // const currentTeam = teams.find((team: Team) => team.teamID === args.event.dataItem.teamID);
-    // return { backgroundColor: currentTeam.teamColor };
-    // }
-
-    // public createFormGroup(args: CreateFormGroupArgs): FormGroup {
-    //     const dataItem = args.dataItem;
-    //     const isOccurrence = args.mode === EditMode.Occurrence;
-    //     const exceptions = isOccurrence ? [] : dataItem.recurrenceExceptions;
-
-    //     this.formGroup = this.formBuilder.group({
-    //         id: args.isNew ? this.getNextId() : dataItem.id,
-    //         amount: [dataItem.start],
-    //         quentity: [dataItem.end],
-    //         email: [dataItem.startTimezone],
-    //         lastName: [dataItem.endTimezone],
-    //         phoneNumber: dataItem.isAllDay,
-    //         title: dataItem.title,
-    //         description: dataItem.description,
-    //         recurrenceRule: dataItem.recurrenceRule,
-    //         recurrenceId: dataItem.recurrenceId,
-    //         recurrenceExceptions: [exceptions],
-    //         teamID: null
-    //     });
-
-    //     return this.formGroup;
-    // }
 
     public getNextId(): number {
         const len = this.events.length;
@@ -137,16 +113,45 @@ export class PlanningComponent implements OnInit {
     }
 
     public open() {
-        console.log('in');
         this.opened = true;
     }
 
-    // public onClickDialog() {
-    //     this.dialogService.open({
-    //         title: 'שלח מתנה',
-    //         content: PlanningComponent,
-    //         width: 900,
-    //         height: 550
-    //     })
-    // }
+    onChange(selected) {
+        this.selectedPaper = selected;
+        if (selected === 'etf') {
+            this.generalData = null;
+            this.generalPapers = [];
+            this.generalData = this.etfData;
+        } else if (selected === 'stocks') {
+            this.generalData = null;
+            this.generalPapers = [];
+            this.generalData = this.stocksData;
+        }
+    }
+
+    moreStocks() {
+        this.disable = !this.disable;
+    }
+
+    public filterSettings: DropDownFilterSettings = {
+        caseSensitive: false,
+        operator: "contains",
+    };
+
+    selectedChanged(selectedPaper) {
+        console.log(selectedPaper);
+        let collectPapers;
+        if (selectedPaper !== undefined) {
+            if (this.selectedPaper === 'etf') {
+                this.etfPapers.forEach(name => {
+                    if (name.anafim === selectedPaper) {
+                        this.generalPapers.push(name);
+                    }
+                });
+                console.log(this.generalPapers)
+            } else if (this.selectedPaper === 'stocks') {
+                this.generalPapers = this.stocksPapers;
+            }
+        }
+    }
 }

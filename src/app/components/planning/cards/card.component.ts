@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Stock } from 'src/app/models/stock.model';
 import { stocks } from 'src/app/resources/stocks';
 
@@ -10,6 +11,7 @@ export class CardComponent {
     @Output() public toggleEvents: EventEmitter<Stock> = new EventEmitter();
     isSelected: boolean;
     public cards: Stock[] = stocks;
+    formGroup: FormGroup;
 
     public onCardClick(card: Stock): void {
         this.cards.forEach(card => card.selected = false);
