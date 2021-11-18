@@ -1,8 +1,14 @@
-<kendo-card *ngFor="let card of cards" (click)="onCardClick(card)"
-    style="border-width: 0px; cursor: pointer; display: table-cell" [ngClass]="{ 'card-opacity': card.selected }">
-    <kendo-card-header *ngIf="card.imgId" class="k-hbox">
+<!-- <kendo-card *ngFor="let card of cards" (click)="onCardClick(card)"
+    style="border-width: 0px; cursor: pointer; display: table-cell" [ngClass]="{ 'card-opacity': card.selected }"> -->
+<!-- <kendo-card-header *ngIf="card.imgId" class="k-hbox">
         <kendo-avatar  [imageSrc]="card.imgId" 
             width="155px" height="100px" [shape]="'square'" class="stock-card" style="border:0px">
         </kendo-avatar>
-    </kendo-card-header>
-</kendo-card>
+    </kendo-card-header> -->
+<!-- </kendo-card> -->
+
+<div style="cursor: pointer;display: table-cell" class="card" *ngFor="let card of cards" [ngClass]="{ 'card-opacity': card.selected }"
+    (click)="onCardClick(card)">
+    <img class="card-img-top" [src]="card.imgId" alt="Card image cap">
+</div>
+<button type="button" class="btn btn-link">הצג עוד...</button>

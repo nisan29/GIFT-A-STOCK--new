@@ -386,7 +386,7 @@ a {
 @media (min-width: 1140px) {
     .planning-page {
         .personal-card {
-            grid-template-columns: repeat(4, 0fr);
+            grid-template-columns: repeat(4, 1fr);
         }
     }
 }

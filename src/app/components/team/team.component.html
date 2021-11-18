@@ -49,25 +49,12 @@
                 </button>
                 <button kendoGridPDFCommand icon="file-pdf"> {{ customMsgService.translate('exportPdf') }} </button>
             </ng-template>
-            <!-- <kendo-grid-checkbox-column
-                [width]="45"
-                [headerClass]="{ 'text-center': true }"
-                [class]="{ 'text-center': true }"
-                [resizable]="false"
-                [columnMenu]="false"
-                showSelectAll="true"
-            >
-            </kendo-grid-checkbox-column> -->
-            <!-- <kendo-grid-column-group [title]="customMsgService.translate('employee')" [columnMenu]="false"> -->
+            
                 <kendo-grid-column
                     field="SecurityId"
                     [title]="customMsgService.translate('SecurityId')"
                     [width]="220"
                 >
-                    <!-- <ng-template kendoGridCellTemplate let-dataItem>
-                        <div class="customer-photo" [ngStyle]="{ 'background-image': photoURL(dataItem) }"></div>
-                        <div class="customer-name"> {{ dataItem.fullName }} </div>
-                    </ng-template> -->
                 </kendo-grid-column>
                 <kendo-grid-column
                     field="SecurityName"
@@ -80,21 +67,15 @@
                     [title]="customMsgService.translate('Symbol')"
                     [width]="100"
                 >
-                    <!-- <ng-template kendoGridCellTemplate let-dataItem>
-                        <img class="flag" [src]="flagURL(dataItem)" width="30" />
-                    </ng-template> -->
+
                 </kendo-grid-column>
                 <kendo-grid-column
                     field="SecurityType"
                     [title]="customMsgService.translate('SecurityType')"
                     [width]="100"
                 >
-                    <!-- <ng-template kendoGridCellTemplate let-dataItem>
-                        <span *ngIf="dataItem.isOnline === true" class="badge badge-success"> Online </span>
-                        <span *ngIf="dataItem.isOnline === false" class="badge badge-danger"> Offline </span>
-                    </ng-template> -->
+
                 </kendo-grid-column>
-            <!-- </kendo-grid-column-group> -->
             <kendo-grid-column-group [hidden]="observer === 'adult'" [title]="customMsgService.translate('performance')" [columnMenu]="false">
                 <kendo-grid-column
                     field="rating"
@@ -114,41 +95,15 @@
                     [resizable]="false"
                     filter="numeric"
                 >
-                    <!-- <ng-templat\e kendoGridCellTemplate let-dataItem>
-                        <kendo-sparkline
-                            type="bar"
-                            [data]="dataItem.target"
-                            [tooltip]="{ visible: false }"
-                            [transitions]="true"
-                            [seriesDefaults]="{
-                                labels: {
-                                    background: 'none',
-                                    visible: true,
-                                    format: '{0}%'
-                                }
-                            }"
-                        >
-                            <kendo-chart-area opacity="0" [width]="200"></kendo-chart-area>
-                            <kendo-chart-value-axis>
-                                <kendo-chart-value-axis-item [min]="0" [max]="130"> </kendo-chart-value-axis-item>
-                            </kendo-chart-value-axis>
-                        </kendo-sparkline>
-                    </ng-templat> -->
+                    
                 </kendo-grid-column>
                 <kendo-grid-column [hidden]="observer === 'child'"
                     field="PercentageChange"
                     [title]="customMsgService.translate('PercentageChange')"
                     [width]="100"
                     >
-                    <!-- <ng-template kendoGridCellTemplate let-dataItem>
-                        <span [ngClass]="{ 'red text-bold': dataItem.budget < 0 }"> {{ dataItem.budget | currency }} </span>
-                    </ng-template> -->
                 </kendo-grid-column>
             </kendo-grid-column-group>
-            <!-- <kendo-grid-column-group [title]="customMsgService.translate('contacts')" [columnMenu]="false">
-                <kendo-grid-column field="phone" [title]="customMsgService.translate('phone')" [width]="130"> </kendo-grid-column>
-                <kendo-grid-column field="address" [title]="customMsgService.translate('address')" [width]="200"> </kendo-grid-column>
-            </kendo-grid-column-group> -->
 
             <kendo-grid-pdf fileName="Employees.pdf" [repeatHeaders]="true"></kendo-grid-pdf>
             <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>

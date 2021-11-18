@@ -32,7 +32,7 @@ import { NotificationModule } from '@progress/kendo-angular-notification';
 import { MessageService } from '@progress/kendo-angular-l10n';
 
 const drawerRoutes = [
-    { path: '', component: PlanningComponent },
+    { path: 'team', component: TeamComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'planning', component: PlanningComponent },
     { path: 'profile', component: ProfileComponent },
@@ -52,7 +52,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 
 export function playerFactory() {
     return player;
-  }
+}
 
 @NgModule({
     declarations: [
@@ -98,4 +98,4 @@ export function playerFactory() {
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

@@ -40,10 +40,5 @@ export const stocks: Stock[] = [
         stockId: 8,
         imgId: '/assets/STOCKS/GOOGLE.png',
         selected: false
-    },
-    {
-        stockId: 9,
-        imgId: '/assets/STOCKS/SEEMOREHE.png',
-        selected: false
     }
 ];

@@ -81,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     public drawerItems() {
         return [
-            { text: 'התיק שלי', icon: 'k-i-grid', path: '/', selected: true },
+            { text: 'התיק שלי', icon: 'k-i-grid', path: '/team', selected: true },
             { text: 'מצב הנכסים שלי', icon: 'k-i-chart-line-markers', path: '/dashboard', selected: false },
             { text: 'מידע אישי', icon: 'k-i-user', path: '/profile', selected: false },
             { separator: true },
