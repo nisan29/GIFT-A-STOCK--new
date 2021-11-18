@@ -1,2 +1,130 @@
+<!-- <iframe src="https://www.tase.co.il/he" height="500" width="1050" title="Tase" frameborder="0"></iframe> -->
+<div class="planning-page main-content">
+    <div class="card-container">
+        <div class="card-component">
+            <form class="k-form k-form-horizontal" style="max-width: 700px" [formGroup]="formGroup">
+                <fieldset class="k-form-fieldset">
 
-<iframe src="https://www.tase.co.il/he" height="500" width="1050" title="Tase" frameborder="0"></iframe>
+                    <div style="cursor: pointer;display: table-cell" class="card">
+                        <img class="card-img-top" src="assets/giphy.gif" alt="Card image cap">
+                    </div>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label class="k-label" text="התקבלה מתנה מעדי מרקוביץ">
+                        </kendo-label>
+                        <kendo-textbox formControlName="bless" readonly="true">
+                        </kendo-textbox>
+                    </kendo-formfield>
+
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label class="k-label" text="פרטי המתנה">
+                        </kendo-label>
+                        <kendo-textbox formControlName="paper" readonly="true">
+                        </kendo-textbox>
+                    </kendo-formfield>
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label class="k-label">
+                        </kendo-label>
+                        <kendo-textbox formControlName="quentity" readonly="true">
+                        </kendo-textbox>
+                    </kendo-formfield>
+                    <kendo-formfield orientation="horizontal">
+                        <kendo-label class="k-label">
+                        </kendo-label>
+                        <kendo-textbox formControlName="amount" readonly="true">
+                        </kendo-textbox>
+                    </kendo-formfield>
+
+                    <div style="margin-left: 23%;" class="card-header-wrapper">
+                        <div class="card-buttons">
+                            <kendo-buttongroup style="margin-right: 15%;" selection="single">
+                                <button kendoButton [toggleable]="true" [selected]="true" (click)="onChange('trust')">
+                                    נאמנות </button>
+                                <button kendoButton [toggleable]="true" (click)="onChange('stocks')">
+                                    חשבון ני"ע פרטי
+                                </button>
+                            </kendo-buttongroup>
+                        </div>
+                        <span></span>
+                    </div>
+
+                    <kendo-formfield [hidden]="isTrust" orientation="horizontal">
+                        <kendo-label class="k-label" text="האחזקות יועברו לניהול בנאמנות ב">
+                        </kendo-label>
+                        <kendo-textbox formControlName="holding" readonly="true">
+                        </kendo-textbox>
+                    </kendo-formfield>
+
+                    <div [hidden]="!isTrust">
+                        <kendo-formfield orientation="horizontal">
+                            <kendo-label style="margin-left: 0px;" class="k-label">
+                            </kendo-label>
+                            <kendo-combobox #bankAccount formControlName="bankAccount"
+                                [kendoDropDownFilter]="filterSettings" [data]="accountBank" textField="fullName"
+                                [valuePrimitive]="true" (valueChange)="selectedBankChanged($event)" valueField="code"
+                                [filterable]="true" placeholder="בחר/י בנק">
+                            </kendo-combobox>
+                        </kendo-formfield>
+
+                        <kendo-formfield orientation="horizontal">
+                            <kendo-label style="margin-left: 0px;" class="k-label">
+                            </kendo-label>
+                            <kendo-combobox #branch formControlName="branch" [kendoDropDownFilter]="filterSettings"
+                                [data]="branchesPerBank" textField="city" [valuePrimitive]="true" valueField="city"
+                                [filterable]="true" placeholder="בחר/י סניף">
+                            </kendo-combobox>
+                        </kendo-formfield>
+
+                        <kendo-formfield orientation="horizontal">
+                            <kendo-label style="margin-left: 0px;" class="k-label"></kendo-label>
+                            <div class="form-floating mb-1">
+                                <input style="padding: 0px 5px;height: 50px;" formControlName="account" type="number"
+                                    class="form-control" id="floatingInput" #account required>
+                                <label dir="rtl" for="floatingInput">מספר חשבון</label>
+                            </div>
+                        </kendo-formfield>
+                    </div>
+
+                    <div style="margin-bottom: 20px; display:grid;" class="k-form-buttons">
+
+                        <button [disabled]=" isTrust ? formGroup.invalid || formGroup.pristine: null" kendoButton
+                            [primary]="true" (click)="send()">
+                            אשר
+                        </button>
+                    </div>
+
+                    <div class="container" style="position: relative; width: 60%;">
+                        <kendo-dialog *ngIf="opened" (close)="close()" [minWidth]="250" [width]="380">
+
+                            <ng-lottie class="svg" [options]="options" (animationCreated)="animationCreated($event)">
+                            </ng-lottie>
+
+                            <p style="margin: 30px; text-align: center;">
+                                העסקה תבוצע בפועל רק לאחר אישור חבר הבורסה של מעניק המתנה.
+
+                                אין לראות במידע המוצג או בכל חלק ממנו משום המלצה או עצה לנהוג בדרך זו או אחרת, לרבות בכל
+                                הקשור לקבלת החלטות בתחום ההשקעות או משום מצג או התחייבות של הבורסה להשגת תשואות או
+                                רווחים ואין בו כדי להעיד על רווחים שיושגו בעתיד. אין במידע המוצג כדי להוות תחליף לייעוץ
+                                אישי המתחשב בצרכיו ונתוניו של כל אדם.
+
+                                הבורסה אינה מתחייבת לשלמותו של המידע לעדכניותו או להתאמתו לצורך מסוים זה או אחר, והיא
+                                אינה אחראית לכל ליקוי, טעות, שגיאה, השמטה או אי דיוק שנפלו, במידע מכל סיבה שהיא. האמור
+                                באתר זה כפוף לתנאי השימוש של הבורסה (הסכם שימוש באתר).
+
+
+
+                                על כל לקוח לקחת בחשבון כי ייתכנו עלויות של עמלות ומיסים נלווים. יש לבחון את הפרטים,
+                                התנאים והסייגים הנלווים מול חבר הבורסה דרכו ינוהל תיק ההשקעות. מובהר כי הבורסה אינה
+                                אחראית בדרך כלשהי לשלמות הנתונים, תוכנם או דרך הצגתם. האחריות המלאה בקשר לנתונים חלה על
+                                חבר הבורסה שמסר אותם.
+                            </p>
+                            <kendo-dialog-actions>
+                                <button kendoButton (click)="close()">סגור</button>
+                            </kendo-dialog-actions>
+                        </kendo-dialog>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

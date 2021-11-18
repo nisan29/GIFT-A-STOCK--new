@@ -9,12 +9,15 @@ import { sampleData } from 'src/app/resources/events';
 import { ETF } from 'src/app/resources/ETFData';
 import { ETFPapers } from 'src/app/resources/ETFPapers';
 import { STOCKSPapers } from 'src/app/resources/STOCKSPapers';
+import { accountBank } from 'src/app/resources/accountBank';
+import { branches } from 'src/app/resources/branches';
 import { STOCKS } from 'src/app/resources/STOCKSData';
 import { Event } from 'src/app/models/event.model';
 import { Stock } from 'src/app/models/stock.model';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 import { DropDownFilterSettings } from '@progress/kendo-angular-dropdowns';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
     selector: 'app-planning-component',
@@ -35,7 +38,6 @@ export class PlanningComponent implements OnInit {
     public data: Event[];
     public selectedDate: Date = new Date('2013-06-27T00:00:00Z');
     public formGroup: FormGroup = this.formBuilder.group({
-        id: null,
         amount: 50,
         quentity: 1,
         email: null,
@@ -43,6 +45,7 @@ export class PlanningComponent implements OnInit {
         phoneNumber: null,
         from: null,
         message: null,
+        paper: null,
         isFamily: null,
         account: null,
         bankAccount: [null, Validators.required],
@@ -65,8 +68,12 @@ export class PlanningComponent implements OnInit {
     public stocksData = STOCKS;
     public stocksPapers = STOCKSPapers;
     public selectedPaper = 'etf';
+    public accountBank = accountBank;
+    public branches = branches;
+    public branchesPerBank: Array<any> = [];
 
-    constructor(public msgService: MessageService, private formBuilder: FormBuilder) {
+
+    constructor(public msgService: MessageService, private formBuilder: FormBuilder, private loginService: LoginService) {
         this.customMsgService = this.msgService as CustomMessagesService;
         // this.createFormGroup = this.createFormGroup.bind(this);
         this.data = this.events.slice();
@@ -75,11 +82,15 @@ export class PlanningComponent implements OnInit {
     ngOnInit(): void {
         this.formGroup.valueChanges.subscribe(change => {
             const calculatedPrice = this.calculate(change.amount, change.quentity);
-            console.log(calculatedPrice);
             if (calculatedPrice !== this.calculatedValue && calculatedPrice !== undefined) {
                 this.calculatedValue = +calculatedPrice;
             }
         });
+    }
+
+    onSelect(event){
+        const formValues = JSON.stringify(event);
+        localStorage.setItem('deatilPaper', formValues);
     }
 
     calculate(amount: any, quentity: any) {
@@ -108,11 +119,14 @@ export class PlanningComponent implements OnInit {
     }
 
     public close(status) {
-        console.log(`Dialog result: ${status}`);
         this.opened = false;
     }
 
-    public open() {
+    public send() {
+        const formValues = JSON.stringify(this.formGroup.value);
+        localStorage.setItem('deatils', formValues);
+
+        console.log(this.formGroup.value);
         this.opened = true;
     }
 
@@ -139,8 +153,6 @@ export class PlanningComponent implements OnInit {
     };
 
     selectedChanged(selectedPaper) {
-        console.log(selectedPaper);
-        let collectPapers;
         if (selectedPaper !== undefined) {
             if (this.selectedPaper === 'etf') {
                 this.etfPapers.forEach(name => {
@@ -148,10 +160,21 @@ export class PlanningComponent implements OnInit {
                         this.generalPapers.push(name);
                     }
                 });
-                console.log(this.generalPapers)
             } else if (this.selectedPaper === 'stocks') {
                 this.generalPapers = this.stocksPapers;
             }
+        }
+    }
+
+    selectedBankChanged(selectedBank) {
+        this.branchesPerBank = [];
+        if (selectedBank !== undefined) {
+            this.branches.forEach(name => {
+                if (name.code === +selectedBank) {
+                    this.branchesPerBank.push(name);
+                }
+            });
+            this.branchesPerBank = this.branchesPerBank.filter((v, i, a) => a.findIndex(t => t.fullBranch === v.fullBranch) === i);
         }
     }
 }

@@ -31,8 +31,8 @@
             </div>
 
             <div [hidden]="!disable">
-                <kendo-combobox [kendoDropDownFilter]="filterSettings" [data]="generalPapers" textField="nameValue"
-                    [valuePrimitive]="true" (valueChange)="selectedChanged($event)" valueField="nameValue"
+                <kendo-combobox [kendoDropDownFilter]="filterSettings" (selectionChange)="onSelect($event)" [data]="generalPapers" textField="nameValue"
+                    [valuePrimitive]="true" valueField="nameValue"
                     [filterable]="true" placeholder="בחר/י נכסים">
                 </kendo-combobox>
             </div>
@@ -155,9 +155,9 @@
                     <kendo-formfield orientation="horizontal">
                         <kendo-label style="margin-left: 0px;" class="k-label">
                         </kendo-label>
-                        <kendo-combobox #bankAccount formControlName="bankAccount" [kendoDropDownFilter]="filterSettings" [data]="null" textField="name"
-                        [valuePrimitive]="true" (valueChange)="selectedChanged($event)" valueField="name"
-                        [filterable]="true" placeholder="בחר/י חשבון">
+                        <kendo-combobox #bankAccount formControlName="bankAccount" [kendoDropDownFilter]="filterSettings" [data]="accountBank" textField="fullName"
+                        [valuePrimitive]="true" (valueChange)="selectedBankChanged($event)" valueField="code"
+                        [filterable]="true" placeholder="בחר/י בנק">
                     </kendo-combobox>
                         <kendo-formerror>זהו הינו שדה חובה</kendo-formerror>
                     </kendo-formfield>
@@ -165,8 +165,8 @@
                     <kendo-formfield orientation="horizontal">
                         <kendo-label style="margin-left: 0px;" class="k-label">
                         </kendo-label>
-                        <kendo-combobox #branch formControlName="branch" [kendoDropDownFilter]="filterSettings" [data]="null" textField="name"
-                        [valuePrimitive]="true" (valueChange)="selectedChanged($event)" valueField="name"
+                        <kendo-combobox #branch formControlName="branch" [kendoDropDownFilter]="filterSettings" [data]="branchesPerBank" textField="fullBranch"
+                        [valuePrimitive]="true" valueField="fullBranch"
                         [filterable]="true" placeholder="בחר/י סניף">
                     </kendo-combobox>
                         <kendo-formerror>זהו הינו שדה חובה</kendo-formerror>
@@ -185,26 +185,19 @@
 
                     <div style="margin-bottom: 20px; display:grid;" class="k-form-buttons">
                         <button [disabled]="formGroup.invalid || formGroup.pristine" kendoButton [primary]="true"
-                            (click)="open()">
+                            (click)="send()">
                             {{ customMsgService.translate('saveChanges') }}
-                        </button>
-                        <button kendoButton>
-                            {{ customMsgService.translate('cancel') }}
                         </button>
                     </div>
 
                     <div class="container" style="position: relative; width: 60%;">
                         <kendo-dialog *ngIf="opened" (close)="close('cancel')" [minWidth]="250" [width]="380">
 
-                            <ng-lottie class="svg" [options]="options" (animationCreated)="animationCreated($event)">
-                            </ng-lottie>
-
                             <p style="margin: 30px; text-align: center;">
-                                Are you sure you want to continue?
+                                המתנה נשלחה!
                             </p>
                             <kendo-dialog-actions>
-                                <button kendoButton (click)="close('no')">No</button>
-                                <button kendoButton (click)="close('yes')" primary="true">Yes</button>
+                                <button kendoButton (click)="close('yes')" primary="true">סגור</button>
                             </kendo-dialog-actions>
                         </kendo-dialog>
                     </div>

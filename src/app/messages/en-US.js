@@ -25,7 +25,7 @@ export const enCustomMessages = {
     stock2: "Stock 2",
     stock3: "Stock 3",
     stock4: "Stock 4",
-    saveChanges: 'Save Changes',
+    saveChanges: 'Send',
     cancel: 'Cancel',
     warehouse: 'Coffee Warehouse',
     startFreeTrial: 'Start Free Trial',
